@@ -26,14 +26,27 @@ public class KafkaListenerT {
 
     ){
         Random random = new Random();
-        if(random.nextBoolean()){
-            log.info("## KafkaMessageListener commited");
-            ack.acknowledge();
-        }else{
-            log.error("## KafkaMessageListener not commit");
-        }
+        ack.acknowledge();
 
-        log.info("## KafkaMessageListener partitionId:[{}], offset:[{}], timesTemp[{}]", partitionId, offSet, ts);
+        log.info("## KafkaMessageListener TopicName [{}], GroupId [{}], partitionId:[{}], offset:[{}], timesTemp[{}]", topicName, groupId, partitionId, offSet, ts);
         System.out.println("## KafkaMessageListener ["+message+"]");
     }
+
+
+    @KafkaListener(topics = "${rgs.topic2.name}", groupId = "GROUP_${rgs.topic2.name}_testeRa", containerFactory="test")
+    public void listenerTopic2(String message, Acknowledgment ack,
+                         @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long ts,
+                         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partitionId,
+                         @Header(KafkaHeaders.OFFSET) String offSet,
+                         @Header(KafkaHeaders.RECEIVED_TOPIC) String topicName,
+                         @Header(KafkaHeaders.GROUP_ID) String groupId
+
+    ){
+        Random random = new Random();
+        ack.acknowledge();
+
+        log.info("## KafkaMessageListener TopicName [{}], GroupId [{}], partitionId:[{}], offset:[{}], timesTemp[{}]", topicName, groupId, partitionId, offSet, ts);
+        System.out.println("## KafkaMessageListener ["+message+"]");
+    }
+
 }

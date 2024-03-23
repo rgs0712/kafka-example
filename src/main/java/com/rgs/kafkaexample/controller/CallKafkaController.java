@@ -21,6 +21,9 @@ public class CallKafkaController {
     @Value("${rgs.topic.name}")
     private String rgsTopicName;
 
+    @Value("${rgs.topic2.name}")
+    private String rgsTopic2Name;
+
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -28,6 +31,7 @@ public class CallKafkaController {
     @SneakyThrows
     public ResponseEntity<?> get(@RequestParam String message) throws ExecutionException, InterruptedException {
         kafkaTemplate.send(rgsTopicName, message);
+        kafkaTemplate.send(rgsTopic2Name, message);
         return ResponseEntity.ok("test");
     }
 }

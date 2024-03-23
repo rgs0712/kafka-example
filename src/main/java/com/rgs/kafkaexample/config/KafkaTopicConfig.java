@@ -30,12 +30,19 @@ public class KafkaTopicConfig {
                            @Value("${rgs.topic.num.partitions}") int numPartitions,
                            @Value("${rgs.topic.num.replicationFactor}") short replicationFactor){
         HashMap<String, String> objectObjectHashMap = new HashMap<>();
-//        objectObjectHashMap.put("retention.ms", "2000");
-//        objectObjectHashMap.put("retention.bytes", "1073741824");
-//        objectObjectHashMap.put("min.insync.replicas", "2");
         return new NewTopic(topicName , numPartitions, replicationFactor)
                 .configs(objectObjectHashMap
 
+                );
+    }
+
+    @Bean
+    public NewTopic topic2(@Value("${rgs.topic2.name}") String topicName,
+                           @Value("${rgs.topic2.num.partitions}") int numPartitions,
+                           @Value("${rgs.topic2.num.replicationFactor}") short replicationFactor){
+        HashMap<String, String> objectObjectHashMap = new HashMap<>();
+        return new NewTopic(topicName , numPartitions, replicationFactor)
+                .configs(objectObjectHashMap
                 );
     }
 
